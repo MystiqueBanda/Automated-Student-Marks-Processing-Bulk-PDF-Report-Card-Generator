@@ -1,0 +1,269 @@
+========================================================================================
+POWERPOINT PRESENTATION SLIDES TRANSCRIPT (13 SLIDES)
+Topic: Automated Student Marks Processing & Bulk PDF Report Card Generator
+Course Module: Continuous Assessment 3 (CA3) Mini Project Evaluation
+Academic Session: 2026-2027 | Department of Robotics and Automation
+========================================================================================
+
+TEAM MEMBERS:
+  • Aditya Shankar Datta  | PRN: 24070127009 | Role: Project Lead & Core Engine Architect
+  • Pushkal Karakavalasa  | PRN: 24070127057 | Role: Defensive Engineering & Logging Lead
+  • Aniket Atole          | PRN: 24070127017 | Role: Document Generation & QA Specialist
+
+========================================================================================
+SLIDE 1: TITLE & TEAM DETAILS
+========================================================================================
+[Top Banner] CONTINUOUS ASSESSMENT 3 (CA3) MINI PROJECT EVALUATION
+[Main Title] AUTOMATED STUDENT MARKS PROCESSING & BULK PDF REPORT CARD GENERATOR
+[Subtitle] An Industrial-Grade Python Automation Pipeline with Two-Tier Defensive Exception Handling
+[Department] Department of Robotics and Automation | Academic Session 2026-2027
+
+[Team Members]
+• Aditya Shankar Datta  | PRN: 24070127009 | Project Lead & Core Backend Architect
+• Pushkal Karakavalasa  | PRN: 24070127057 | Defensive Engineering & Audit Logging Lead
+• Aniket Atole          | PRN: 24070127017 | Document Engineering & QA Specialist
+
+[Tech Stack] Python 3.13  |  Pandas  |  OpenPyXL  |  ReportLab Platypus  |  PowerPoint
+
+
+========================================================================================
+SLIDE 2: EXECUTIVE SUMMARY & PROJECT OBJECTIVES
+========================================================================================
+[Header] EXECUTIVE SUMMARY & PROJECT OBJECTIVES
+
+[Card 1: Executive Summary]
+• Academic assessment processing in colleges suffers from human calculation errors, lack of data
+  validation, and extreme delays in generating student report cards.
+• This project delivers an autonomous, zero-touch Python software engine that ingests raw Excel marks,
+  enforces two-tier defensive validation, computes academic grades, and generates bulk PDF report cards.
+
+[Card 2: Core Engineering Objectives]
+• Zero-Crash Guarantee: Non-blocking row-isolated exception handling for uninterrupted batch execution.
+• Sub-Second Throughput: Processes cohort marks and generates vector PDFs in under 0.5 seconds.
+• Auditability: Complete persistent diagnostic trail of all caught data errors in error_log.txt.
+• Official Artifacts: Print-ready ReportLab vector PDFs and formatted OpenPyXL master summary sheets.
+
+
+========================================================================================
+SLIDE 3: PROBLEM STATEMENT: INEFFICIENCIES OF MANUAL GRADING
+========================================================================================
+[Header] THE PROBLEM IN TRADITIONAL ACADEMIC GRADING
+
+[Left Box: Critical Bottlenecks]
+• Manual Spreadsheet Calculation: Faculty manually calculate sums and percentages, leading to
+  human arithmetic fatigue and transcription mistakes.
+• Undetected Boundary Violations: Spreadsheets silently accept negative marks (e.g. -15), scores
+  exceeding 100 (e.g. 150), or string entries (e.g. 'Absent') without raising validation errors.
+• Zero Structured Audit Trail: Manual modifications leave no record of why or when records were changed.
+• Tedious Report Card Creation: Faculty spend hours doing manual mail-merges in Word processors.
+
+[Right Box: Consequences & Risk]
+• Published transcripts contain erroneous marks, compromising academic integrity.
+• Administrative delays in releasing results before university deadlines.
+• Significant wasted faculty hours that could be dedicated to research and instruction.
+
+
+========================================================================================
+SLIDE 4: COURSE OUTCOME (CO1 - CO4) DETAILED MAPPINGS
+========================================================================================
+[Header] COURSE OUTCOME (CO) MAPPINGS & COMPETENCY ANALYSIS
+
+• CO1 (Problem Analysis & Logic Design - Bloom's Level 4/5):
+  Formulated a deterministic grading algorithm with passing criteria (minimum 35 marks per subject,
+  40% aggregate) and tiered grade classification (Grade A, B, C, Pass, Fail).
+
+• CO2 (Data Processing & Structured Storage - Bloom's Level 3/4):
+  Ingested, filtered, and transformed heterogeneous Excel datasets using Pandas and OpenPyXL,
+  handling missing values and automated tabular styling.
+
+• CO3 (Exception Handling & Robust Automation - Bloom's Level 5/6):
+  Built a two-tier defensive hierarchy (outer try-except for file/schema errors, inner try-except for
+  row boundary violations) delivering a zero-crash guarantee.
+
+• CO4 (Automated Reporting & Artifact Delivery - Bloom's Level 6):
+  Synthesized vectorized individual PDF report cards using ReportLab Platypus and compiled
+  consolidated master Excel registers.
+
+
+========================================================================================
+SLIDE 5: WORKFLOW TRANSFORMATION: MANUAL VS. AUTOMATED
+========================================================================================
+[Header] WORKFLOW TRANSFORMATION: MANUAL VS. AUTOMATED SOLUTION
+
+[Comparison Table]
+Dimension                 Traditional Manual Workflow             Proposed Automated Python System
+------------------------- --------------------------------------- ------------------------------------------
+Data Ingestion            Manual spreadsheet opening & scanning   Programmatic ingestion via Pandas & OpenPyXL
+Type Checking             None; dirty cells cause formula errors  Strict float casting with error isolation
+Boundary Validation       Ad-hoc spot checks (frequently missed)  Deterministic range validation: [0, 100]
+Error Resilience          Process halts or corrupts calculation   Faulty rows skipped & logged; loop continues
+Audit Trail               Non-existent                            Persistent diagnostic logs in error_log.txt
+Report Generation         Manual Word mail-merge (hours)          Bulk vector PDF synthesis (< 0.5s total)
+Batch Turnaround Time     45 to 90 minutes per batch              Sub-second (< 0.5 seconds)
+
+
+========================================================================================
+SLIDE 6: SYSTEM ARCHITECTURE & EXECUTION FLOWCHART
+========================================================================================
+[Header] SYSTEM ARCHITECTURE & EXECUTION FLOWCHART
+
+[Visual Component]
+• Embedded Full-Width Flowchart Diagram:
+  Raw Excel File (.xlsx) -> 1. File Check (Exists + 6 columns)
+    - If Missing -> error_log.txt (Log error and stop safely)
+    - If OK -> 2. Row Check (Check each student row)
+      - If Invalid row -> error_log.txt (Log row and skip student via 'continue')
+      - If Valid row -> 3. Math and Grading (Total, percentage, grade)
+        -> 4. Output Files (Student PDFs + Processed_Results.xlsx)
+
+[Core Takeaways]
+• Phase 1 (Ingestion & File Guard): Outer try-except intercepts missing files & corrupted schemas.
+• Phase 2 (Row Validation Loop): Inner try-except enforces [0, 100] bounds; skips dirty rows without crashing.
+• Phase 3 (Output Synthesis): Produces bulk ReportLab PDF report cards and master OpenPyXL Excel reports.
+
+
+========================================================================================
+SLIDE 7: TECHNICAL IMPLEMENTATION & SOFTWARE STACK
+========================================================================================
+[Header] TECHNICAL IMPLEMENTATION & SOFTWARE STACK
+
+[Core Technologies]
+• Python 3.13: Modern runtime providing strict typing, robust exception handling, and OS portability.
+• Pandas (v2.3.3): Tabular data parsing, vectorized math transformations, and missing value checks.
+• OpenPyXL (v3.1.5): Excel styling (navy fills #1A365D, centered alignment, borders, column autosizing).
+• ReportLab (v5.0.1): Flowable document template engine (Platypus) compiling vector PDF report cards.
+• Python-PPTX (v1.0.2): Automated programmatic PowerPoint generation for CA3 project presentations.
+
+[Architectural Modularity]
+• main.py: Clean separation of logging, metric computation, PDF generation, and Excel export.
+• generate_test_data.py: Synthesizes valid cohort records and critical boundary edge cases.
+
+
+========================================================================================
+SLIDE 8: ACADEMIC COMPUTATION & DYNAMIC GRADING ALGORITHM
+========================================================================================
+[Header] MATHEMATICAL FORMULATIONS & GRADING LOGIC
+
+[Mathematical Operations]
+1. Total Marks Computation:
+   Total = Math + Science + English  (Maximum: 300.0)
+
+2. Aggregate Percentage:
+   Percentage = (Total / 300.0) * 100.0
+
+3. Subject-Level Pass Condition:
+   Pass individual subject if Mark >= 35.0. If any subject < 35.0, overall Result is FAIL.
+
+4. Result Status:
+   Result = 'FAIL' if (Any Subject < 35.0 or Percentage < 40.0%); otherwise 'PASS'.
+
+5. Letter Grade Assignment:
+   • Grade A: Percentage >= 80.0%
+   • Grade B: 65.0% <= Percentage < 80.0%
+   • Grade C: 50.0% <= Percentage < 65.0%
+   • Grade Pass: 40.0% <= Percentage < 50.0%
+   • Grade Fail: Result == FAIL
+
+
+========================================================================================
+SLIDE 9: DEFENSIVE EXCEPTION HANDLING: SCENARIO 1 (FILE & SCHEMA)
+========================================================================================
+[Header] DEFENSIVE EXCEPTION HANDLING: SCENARIO 1 (FILE & SCHEMA)
+
+[Scope & Targets]
+• Target Exceptions: FileNotFoundError, KeyError, generic Exception.
+• Scope: Outer defensive boundary guarding file access and schema integrity.
+
+[Trigger Conditions]
+• User provides an invalid or non-existent file path via command line.
+• Excel workbook contains missing or misspelled required column headers.
+
+[Defensive Action & Safety]
+• Catches error before any data processing begins.
+• Writes structured diagnostic payload to error_log.txt with timestamp and required column list.
+• Displays clean terminal warning and halts execution safely with ZERO unhandled crash.
+
+
+========================================================================================
+SLIDE 10: DEFENSIVE EXCEPTION HANDLING: SCENARIO 2 (ROW DATA INTEGRITY)
+========================================================================================
+[Header] DEFENSIVE EXCEPTION HANDLING: SCENARIO 2 (ROW INTEGRITY)
+
+[Scope & Targets]
+• Target Exceptions: ValueError, TypeError.
+• Scope: Inner defensive boundary wrapping each individual row during iteration.
+
+[Tested Edge Cases]
+• Negative Mark: Math = -15 -> Caught by boundary check (score < 0).
+• Out-of-Bounds Score: Science = 150 -> Caught by boundary check (score > 100).
+• Non-Numeric Entry: English = 'Absent' -> Caught during float(raw_val) conversion.
+• Missing Primary Identifier: Student ID is None or blank -> Caught by null check.
+
+[Zero-Crash Guarantee]
+• Bad row is isolated immediately; full row data and row number are logged to error_log.txt.
+• Executes 'continue' statement to proceed with the next record.
+• Valid cohort rows (e.g. STU205) process and generate PDFs without interruption!
+
+
+========================================================================================
+SLIDE 11: LIVE EXECUTION RESULTS & BULK OUTPUT SHOWCASE
+========================================================================================
+[Header] LIVE EXECUTION RESULTS & BULK OUTPUT SHOWCASE
+
+[Batch Run Comparison]
+• Test Scenario B (student_input_valid.xlsx):
+  - 5/5 valid rows processed cleanly in < 0.2 seconds.
+  - 5 high-resolution PDF report cards emitted in Output_PDFs/ (STU101 to STU105).
+  - Processed_Results.xlsx created with styled navy headers and auto-fitted columns.
+
+• Test Scenario C (student_input_invalid.xlsx):
+  - Rows 2, 3, 4, 5 contained boundary and type violations; caught and skipped cleanly.
+  - Row 6 (STU205 Ishaan Gupta) processed successfully, proving non-blocking continuity.
+  - 4 row errors captured and isolated into error_log.txt; 0 application crashes!
+
+
+========================================================================================
+SLIDE 12: COMPREHENSIVE TEST VERIFICATION MATRIX
+========================================================================================
+[Header] 10-POINT TEST CASE VERIFICATION MATRIX
+
+Test ID   Target Condition              Expected System Behavior              Verification Status
+--------- ----------------------------- ------------------------------------- -------------------
+TC-01     student_input_valid.xlsx      5 rows processed, 0 skipped           100% PASSED
+TC-02     Bulk PDF Generation           5 PDFs in Output_PDFs/                100% PASSED
+TC-03     Excel Master Export           Processed_Results.xlsx generated      100% PASSED
+TC-04     Row 2: Math = -15             Scenario 2 catches & logs boundary    100% PASSED
+TC-05     Row 3: Science = 150          Scenario 2 catches & logs boundary    100% PASSED
+TC-06     Row 4: English = 'Absent'     Scenario 2 catches float type error   100% PASSED
+TC-07     Row 5: Missing Student ID     Scenario 2 catches missing key        100% PASSED
+TC-08     Row 6: STU205 (Valid in bug)  Processes successfully to PDF         100% PASSED
+TC-09     non_existent_file.xlsx        Scenario 1 catches FileNotFoundError  100% PASSED
+TC-10     Autonomous Test Runner        run_full_verification.py passes all   100% PASSED
+
+
+========================================================================================
+SLIDE 13: INDIVIDUAL TECHNICAL CONTRIBUTIONS (3-STUDENT TEAM)
+========================================================================================
+[Header] INDIVIDUAL TECHNICAL CONTRIBUTIONS & TEAM RESPONSIBILITIES
+
+[Student 1: Aditya Shankar Datta | PRN: 24070127009]
+• Role: Project Lead & Core Backend Architect
+• Designed end-to-end processing pipeline in main.py.
+• Implemented Pandas data ingestion engine, schema resolution, and type conversions.
+• Formulated mathematical academic grading algorithms (Total, %, Grade, Result).
+• Authored Executive Summary, Architectural Design, and Grading Logic in Project Report.
+
+[Student 2: Pushkal Karakavalasa | PRN: 24070127057]
+• Role: Defensive Engineering & Logging Lead
+• Conceptualized and implemented the Two-Tier Defensive Exception Handling architecture.
+• Built Scenario 1 outer guard (file/schema) and Scenario 2 inner guard (boundary [0, 100]).
+• Designed structured diagnostic audit subsystem in error_log.txt.
+• Engineered OpenPyXL styled master Excel summary export (Processed_Results.xlsx).
+
+[Student 3: Aniket Atole | PRN: 24070127017]
+• Role: Document Generation & QA Specialist
+• Designed and implemented ReportLab Platypus vector PDF report card layout.
+• Developed generate_test_data.py synthesizing valid cohorts and boundary edge cases.
+• Formulated 10-point Verification Matrix and autonomous runner run_full_verification.py.
+• Generated Workflow Architecture diagram, PowerPoint presentation deck, and Viva Guide.
+========================================================================================

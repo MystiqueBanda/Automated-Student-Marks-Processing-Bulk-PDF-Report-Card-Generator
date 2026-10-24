@@ -1,0 +1,103 @@
+========================================================================================
+5-MINUTE DEMONSTRATION VIDEO SCRIPT (TIMESTAMPS: 0:00 - 5:00)
+Topic: Automated Student Marks Processing & Bulk PDF Report Card Generator
+Course Module: CA3 Evaluation (Engineering Software Automation)
+Speakers:
+  • Student 1: Aditya Shankar Datta (PRN: 24070127009) - Project Lead & Core Engine Architect
+  • Student 2: Pushkal Karakavalasa (PRN: 24070127057) - Defensive Engineering & Logging Lead
+  • Student 3: Aniket Atole         (PRN: 24070127017) - Document Generation & QA Specialist
+========================================================================================
+
+[0:00 - 0:45] INTRODUCTION & PROBLEM STATEMENT
+----------------------------------------------------------------------------------------
+[Visual: Camera framing all three team members, Slide 1 visible on screen, then transitioning to screen recording]
+
+ADITYA (0:00 - 0:18):
+"Hello everyone and welcome to our Continuous Assessment 3 project defense. I am Aditya Shankar Datta, PRN 24070127009, and joining me are my teammates Pushkal Karakavalasa, PRN 24070127057, and Aniket Atole, PRN 24070127017. 
+Today, we are showcasing our automated Python software system: the 'Automated Student Marks Processing and Bulk PDF Report Card Generator', covering Course Outcomes CO1 through CO4."
+
+PUSHKAL (0:18 - 0:32):
+"In educational administration, processing student marks manually is notoriously prone to human error and extreme delays. Faculty often spend hours entering marks into spreadsheets, manually calculating percentages and grades, and copy-pasting numbers into Word documents to print report cards."
+
+ANIKET (0:32 - 0:45):
+"Worse, manual spreadsheets lack validation guards—typos such as negative marks like -15, impossible scores like 150, or text like 'Absent' pass right through unnoticed. Our project replaces this entire manual bottleneck with an automated, fault-tolerant Python pipeline."
+
+
+[0:45 - 1:30] MANUAL PROCESS VS. PROPOSED AUTOMATION PIPELINE
+----------------------------------------------------------------------------------------
+[Visual: Switch screen to Slide 5 comparison table, then zoom into Workflow/Workflow_Architecture.png]
+
+ADITYA (0:45 - 1:08):
+"Let's look at our system architecture on screen. Rather than relying on manual intervention, our solution implements a 4-stage pipeline. 
+Stage 1 programmatically ingests raw student Excel spreadsheets using Pandas and OpenPyXL. Immediately at Stage 2, our outer Exception Scenario 1 guard validates file existence and verifies that all mandatory headers—Student ID, Name, Math, Science, English, and Attendance—are strictly present."
+
+PUSHKAL (1:08 - 1:30):
+"If the file passes, Stage 3 initiates our row-level validation loop, guarded by Exception Scenario 2. Here, every score is type-checked and validated against academic boundaries between 0 and 100. If any dirty record is encountered, the system never crashes—it isolates the row, logs the error into `error_log.txt`, and seamlessly processes the remaining cohort. 
+Finally, Stage 4 calculates total marks, percentage, and assigned grades, synthesizing vectorized PDF report cards via ReportLab and a styled master Excel sheet."
+
+
+[1:30 - 3:00] LIVE SCRIPT EXECUTION: VALID EXCEL INPUT -> PDF OUTPUTS
+----------------------------------------------------------------------------------------
+[Visual: Screen share switching to terminal and VS Code / File Explorer]
+
+ANIKET (1:30 - 1:55):
+"Now, let's observe the system in live action. First, let's inspect our test data generator script, `generate_test_data.py`. When we run `python generate_test_data.py`, it automatically synthesizes two datasets: `student_input_valid.xlsx` and `student_input_invalid.xlsx`. 
+Opening `student_input_valid.xlsx`, we see 5 legitimate student records with realistic scores across Mathematics, Science, and English, along with attendance percentages."
+
+ADITYA (1:55 - 2:25):
+"Now watch as I execute our core automation engine on this valid dataset:
+Command: `python main.py student_input_valid.xlsx`
+[Aditya executes command in terminal]
+Look at the terminal output: Scenario 1 verifies the schema in milliseconds. The row-by-row loop activates, processing students STU101 Aarav Sharma, STU102 Diya Patel, STU103 Rohan Verma, STU104 Ananya Iyer, and STU105 Kabir Mehta. Total execution time: under half a second! All 5 rows passed, 0 skipped, and 5 PDF report cards have been emitted."
+
+ANIKET (2:25 - 3:00):
+"Let's open the `Output_PDFs` directory. Notice the generated files: `ReportCard_STU101.pdf` through `ReportCard_STU105.pdf`. Let's open `ReportCard_STU101.pdf`. 
+Notice the professional institutional styling: the institutional header banner, the student metadata grid, the subject marks breakdown table with passing criteria, the color-coded Pass status badge, aggregate percentage of 88.33%, Grade A, and official faculty signature lines at the bottom. 
+Concurrently, `Processed_Results.xlsx` has been compiled with auto-fitted columns and navy header styling."
+
+
+[3:00 - 4:15] TESTING EXCEPTION HANDLING: INVALID INPUT & MISSING FILE
+----------------------------------------------------------------------------------------
+[Visual: Switch back to VS Code/Terminal; open student_input_invalid.xlsx, execute terminal commands, then open error_log.txt]
+
+PUSHKAL (3:00 - 3:35):
+"Now let's demonstrate the hallmark of this project: our two-tier defensive exception handling. 
+First, let's open `student_input_invalid.xlsx`. We have intentionally placed 4 critical real-world edge cases:
+- Row 2: Vikram Singh has a negative score of -15 in Math.
+- Row 3: Pooja Nair has an impossible score of 150 in Science.
+- Row 4: Sameer Joshi has a non-numeric string 'Absent' in English.
+- Row 5: Meera Rao has a missing Student ID.
+- Row 6: Ishaan Gupta is a valid student record placed right after the dirty records."
+
+ADITYA (3:35 - 3:55):
+"Watch what happens when we execute `python main.py student_input_invalid.xlsx`.
+[Aditya executes command]
+Notice how the terminal reacts! Instead of throwing an unhandled traceback and crashing:
+- Row 2 is flagged: 'Score -15.0 violates boundary [0, 100]'.
+- Row 3 is flagged: 'Score 150.0 violates boundary [0, 100]'.
+- Row 4 is flagged: 'Non-numeric score Absent detected'.
+- Row 5 is flagged: 'Student ID is missing'.
+Crucially, look at Row 6: Student STU205 Ishaan Gupta was successfully processed, and `ReportCard_STU205.pdf` was generated!"
+
+PUSHKAL (3:55 - 4:15):
+"Now let's test Exception Scenario 1 by running `python main.py non_existent_file.xlsx`. 
+The system intercepts the `FileNotFoundError`, displays a clean warning, and logs the incident without crashing.
+Let's open `error_log.txt`. As you can see, every single caught exception is timestamped with the exact scenario name, row number, offending values, and diagnostic context. This gives institutional auditability without human guesswork."
+
+
+[4:15 - 5:00] CONCLUSION, TECHNICAL BREAKDOWN & VERIFICATION
+----------------------------------------------------------------------------------------
+[Visual: Camera back to Aditya, Pushkal, and Aniket; Slide 13 on screen showing individual contributions]
+
+ADITYA (4:15 - 4:30):
+"To summarize our technical breakdown:
+As Project Lead, I architected the end-to-end pipeline in `main.py`, the Pandas data ingestion layer, and the mathematical grading algorithms satisfying CO1 and CO2."
+
+PUSHKAL (4:30 - 4:45):
+"I led the defensive engineering, implementing both Tier 1 file/schema and Tier 2 row-level try-except blocks, the persistent audit logging subsystem in `error_log.txt`, and OpenPyXL Excel styling, fulfilling CO3."
+
+ANIKET (4:45 - 5:00):
+"And I developed the ReportLab Platypus vector PDF report card layout engine, test data synthesis in `generate_test_data.py`, and the automated test runner `run_full_verification.py`, fulfilling CO4.
+All test scenarios in our verification matrix passed with a 100% success rate. 
+Thank you for your time, and we look forward to your questions during the viva evaluation!"
+========================================================================================

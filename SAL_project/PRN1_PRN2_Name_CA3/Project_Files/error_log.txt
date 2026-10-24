@@ -1,0 +1,5 @@
+[2026-10-24 10:33:04] [EXCEPTION SCENARIO 1: FILE / SCHEMA ERROR]
+  Message: Input file does not exist at specified path: 'D:\Downloads\SAL_project\PRN1_PRN2_Name_CA3\Project_Files\non_existent_file.xlsx'
+  Target File: D:\Downloads\SAL_project\PRN1_PRN2_Name_CA3\Project_Files\non_existent_file.xlsx
+  Required Columns: ['Student ID', 'Name', 'Math', 'Science', 'English', 'Attendance %']
+----------------------------------------------------------------------
